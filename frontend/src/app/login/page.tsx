@@ -19,10 +19,20 @@ export default function LoginPage() {
       params.append('username', username);
       params.append('password', password);
 
-      const response = await axios.post(`${API_URL}/login`, params);
+      const response = await axios.post(
+        `${API_URL}/login`,
+        params,
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        }
+      );
+      
 
       // Сохраняем токен в localStorage
       localStorage.setItem('auth_token', response.data.access_token);
+      localStorage.setItem('auth_role', response.data.role);
 
       // Перенаправляем на защищенную страницу
       router.push('/dashboard');
